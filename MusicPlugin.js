@@ -76,7 +76,7 @@ client.on('message', async msg => {
 					.setColor(`${msg.member.displayHexColor}`)
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Please provide a value to select one of the search results ranging from 1-10.`, `${msg.author.avatarURL}`)
-					msg.channel.send({embed: bed});
+					msg.channel.send({embed: bed}).then(msg => {msg.delet(20000)});
 					
 					try {
 						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
@@ -122,9 +122,10 @@ client.on('message', async msg => {
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
 		.setColor(`${msg.member.displayHexColor}`)
-		.addField('**Song Queue:**', `${serverQueue.songs[1-10].map(song => `**-** ${song.title}`).join('\n')}`)
+		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}`)
 		.addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
 		return msg.channel.send(embed);
+               if(serverQueue.songs.size >= "15")return msg.channel.send('There are too many songs .. i cant list them all');
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
@@ -169,13 +170,13 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
 		} catch (error) {
 			console.error(`I could not join the voice channel: ${error}`);
 			queue.delete(msg.guild.id);
-			return msg.channel.send(`I could not join the voice channel: ${error}`);
+			return msg.channel.send(`I could not join the voice channel: ${error}`).then(msg => {msg.delete(15000)});
 		}
 	} else {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return undefined;
-		else return msg.channel.send(` **${song.title}** has been added to the queue!`);
+		else return msg.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(1500)});
 	}
 	return undefined;
 }
@@ -189,18 +190,18 @@ function play(guild, song) {
 		return;
 	}
 
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true})
+	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true })
 		.on('end', reason => {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
 			else console.log(reason);
-			msg.channel.send('Song ended');
+			msg.channel.send('Song ended').then(msg => {msg.delete(15000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
 		})
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-	serverQueue.textChannel.send(` Started playing: **${song.title}**`);
+	serverQueue.textChannel.send(` Started playing: **${song.title}**`).then(msg => {msg.delete(15000)});
     }
 
 	
