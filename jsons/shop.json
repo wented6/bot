@@ -1,0 +1,256 @@
+{
+    "cake": {
+        "name":"cake",
+		"pic":"🍰",
+        "type":"food",
+        "price":"15",
+        "desc":"smth to buy if you want cake"
+    },
+    "cookie": {
+        "name":"cookie",
+		"pic":"🍪",
+        "type":"food",
+        "price":"10",
+        "desc":"it's a cookie"
+    },
+	"apple": {
+	    "name":"apple",
+		"pic":"🍎",
+		"type":"food",
+		"price":"5",
+		"desc":"it's an apple"
+	},
+	"greenapple": {
+	    "name":"greenapple",
+		"pic":"🍏",
+		"type":"food",
+		"price":"5",
+		"desc":"it's a green apple"
+	},
+	"banana": {
+	    "name":"banana",
+		"pic":"🍌",
+		"type":"food",
+		"price":"7",
+		"desc":"it's a banana"
+	},
+	"pizza": {
+	    "name":"pizza",
+		"pic":"🍕",
+		"type":"food",
+		"price":"12",
+		"desc":"it's a slice of pizza"
+	},
+	"taco": {
+	    "name":"taco",
+		"pic":"🌮",
+		"type":"food",
+		"price":"4",
+		"desc":"it's a taco"
+	},
+	"burger": {
+	    "name":"burger",
+		"pic":"🍔",
+		"type":"food",
+		"price":"8",
+		"desc":"it's a burger"
+	},
+	"chicken": {
+	    "name":"chicken",
+		"pic":"🍗",
+		"type":"food",
+		"price":"5",
+		"desc":"it's a chicken leg"
+	},
+	"ramen": {
+	    "name":"ramen",
+		"pic":"🍜",
+		"type":"food",
+		"price":"4",
+		"desc":"it's a bowl of ramen"
+	},
+	"oden": {
+	    "name":"oden",
+		"pic":"🍢",
+		"type":"food",
+		"price":"3",
+		"desc":"just oden"
+	},
+	"dango": {
+	    "name":"dango",
+		"pic":"🍡",
+		"type":"food",
+		"price":"6",
+		"desc":"who doesn't love dango?"
+	},
+	"popcorn": {
+	    "name":"popcorn",
+		"pic":"🍿",
+		"type":"food",
+		"price":"10",
+		"desc":"it's like you're like at the theaters"
+	},
+	"icecream": {
+	    "name":"icecream",
+		"pic":"🍦",
+		"type":"food",
+		"price":"3",
+		"desc":"you should eat it before it melts"
+	},
+	"chocolate": {
+	    "name":"chocolate",
+		"pic":"🍫",
+		"type":"food",
+		"price":"2",
+		"desc":"it's a bar of chocolate"
+	},
+	"riceball": {
+	    "name":"riceball",
+		"pic":"🍙",
+		"type":"food",
+		"price":"3",
+		"desc":"it's a ball of rice"
+	},
+	"sushi": {
+	    "name":"sushi",
+		"pic":"🍣",
+		"type":"food",
+		"price":"4",
+		"desc":"yummy yummy sushi"
+	},
+	"beer": {
+	    "name":"beer",
+		"pic":"🍺",
+		"type":"drinks",
+		"price":"6",
+		"desc":"omg, it's a beer"
+	},
+	"whine": {
+	    "name":"whine",
+		"pic":"🍷",
+		"type":"drinks",
+		"price":"30",
+		"desc":"sum good whine"
+	},
+	"cocktail": {
+	    "name":"cocktail",
+		"pic":"🍸",
+		"type":"drinks",
+		"price":"15",
+		"desc":"... kinda like a dry martini"
+	},
+	"champagne": {
+	    "name":"champagne",
+		"pic":"🍾",
+		"type":"drinks",
+		"price":"45",
+		"desc":"... for a celebration"
+	},
+	"sake": {
+	    "name":"sake",
+		"pic":"🍶",
+		"type":"drinks",
+		"price":"50",
+		"desc":"... it's japanese"
+	},
+	"tea": {
+	    "name":"tea",
+		"pic":"🍵",
+		"type":"drinks",
+		"price":"4",
+		"desc":"just some tea"
+	},
+	"coffee": {
+	    "name":"coffee",
+		"pic":"☕",
+		"type":"drinks",
+		"price":"6",
+		"desc":"a nice cup 'o joe"
+	},
+	"whisky": {
+	    "name":"whisky",
+		"pic":"🥃",
+		"type":"drinks",
+		"price":"8",
+		"desc":".. it's been a rough day"
+	},
+	"milk": {
+	    "name":"milk",
+		"pic":"🥛",
+		"type":"drinks",
+		"price":"3",
+		"desc":"... think of the children"
+	},
+	"rose": {
+	    "name":"rose",
+		"pic":"🌹",
+		"type":"flowers",
+		"price":"6",
+		"desc":"for the ones you love in your life"
+	},
+	"hibiscus": {
+	    "name":"hibiscus",
+		"pic":"🌺",
+		"type":"flowers",
+		"price":"2",
+		"desc":"a pretty flower"
+	},
+	"sunflower": {
+	    "name":"sunflower",
+		"pic":"🌻",
+		"type":"flowers",
+		"price":"2",
+		"desc":"for the sunny people in life"
+	},
+	"tulip": {
+	    "name":"tulip",
+		"pic":"🌷",
+		"type":"flowers",
+		"price":"4",
+		"desc":"kinda like the sister to the rose"
+	},
+	"sakura": {
+	    "name":"sakura",
+		"pic":"🌸",
+		"type":"flowers",
+		"price":"2",
+		"desc":"just a cherry blossom"
+	},
+	"moneybag": {
+	    "name":"moneybag",
+		"pic":"💰",
+		"type":"items",
+		"price":"1000",
+		"desc":"if you wanna store your money in bags"
+	},"diamond": {
+	    "name":"diamond",
+		"pic":"💎",
+		"type":"items",
+		"price":"300",
+		"desc":"pretty diamond"
+	},
+	"gun": {
+	    "name":"gun",
+		"pic":"🔫",
+		"type":"items",
+		"price":"150",
+		"desc":"used to shoot stuff"
+	},
+	"pickaxe": {
+	    "name":"pickaxe",
+		"pic":"⛏",
+		"type":"items",
+		"price":"75",
+		"desc":"used to mine"
+	},
+	"key": {
+	    "name":"key",
+		"pic":"🗝",
+		"type":"items",
+		"price":"50",
+		"desc":"for opening and unlocking things"
+	}
+	
+	
+
+}
