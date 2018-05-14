@@ -76,7 +76,7 @@ client.on('message', async msg => {
 					.setColor(`${msg.member.displayHexColor}`)
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Please provide a value to select one of the search results ranging from 1-10.`, `${msg.author.avatarURL}`)
-					msg.channel.send({embed: bed}).then(msg => {msg.delet(20000)});
+					msg.channel.send({embed: bed}).then(msg => {msg.delete(20000)});
 					
 					try {
 						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
