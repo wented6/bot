@@ -204,7 +204,7 @@ function play(guild, song) {
 	serverQueue.textChannel.send(` Started playing: **${song.title}**`).then(msg => {msg.delete(30000)});
     }
 
-	
+	msg.delete(30000);
 });
 
 client.login(TOKEN);
