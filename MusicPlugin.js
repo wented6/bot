@@ -76,7 +76,7 @@ client.on('message', async msg => {
 					.setColor(`${msg.member.displayHexColor}`)
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Please provide a value to select one of the search results ranging from 1-10.`, `${msg.author.avatarURL}`)
-					msg.channel.send({embed: bed}).then(msg => {msg.delete(20000)});
+					msg.channel.send({embed: bed});
 					
 					try {
 						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
@@ -176,7 +176,7 @@ async function handleVideo(video, msg, voiceChannel, playlist = false) {
 		serverQueue.songs.push(song);
 		console.log(serverQueue.songs);
 		if (playlist) return undefined;
-		else return msg.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(1500)});
+		else return msg.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(30000)});
 	}
 	return undefined;
 }
@@ -194,14 +194,14 @@ function play(guild, song) {
 		.on('end', reason => {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
 			else console.log(reason);
-			msg.channel.send('Song ended').then(msg => {msg.delete(15000)});
+			msg.channel.send('Song ended').then(msg => {msg.delete(30000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
 		})
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-	serverQueue.textChannel.send(` Started playing: **${song.title}**`).then(msg => {msg.delete(15000)});
+	serverQueue.textChannel.send(` Started playing: **${song.title}**`).then(msg => {msg.delete(30000)});
     }
 
 	
