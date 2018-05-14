@@ -28,7 +28,13 @@ client.on('resume', () => console.log('I have reconnected '));
 
 client.on('message', async msg => { 
 	if (msg.author.bot) return undefined;
+	if(!prefixes[msg.guild.id]){
+    prefixes[msg.guild.id] = {
+      prefixes: "Nb."
+    };
+  }
 	const prefix = prefixes[msg.guild.id].prefixes;
+	
 	if (!msg.content.startsWith(prefix)) return undefined;
 
 	const args = msg.content.split(' ');
