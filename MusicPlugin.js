@@ -122,7 +122,7 @@ client.on('message', async msg => {
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
 		.setColor(`${msg.member.displayHexColor}`)
-		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}`)
+		.addField('**Song Queue:**', `${serverQueue.songs[1-10].map(song => `**-** ${song.title}`).join('\n')}`)
 		.addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
 		return msg.channel.send(embed);
 	} else if (command === `pause`) {
@@ -189,7 +189,7 @@ function play(guild, song) {
 		return;
 	}
 
-	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true})
 		.on('end', reason => {
 			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
 			else console.log(reason);
