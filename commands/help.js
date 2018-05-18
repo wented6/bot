@@ -18,8 +18,7 @@ if (!uwu) {
     .addField('**Moderation commands:**', '`lvls` `poll` `mute` `kick` `ban` `prune` `setprefix` `setlvlmsg` `warn` `clearwarn`')
     .addField('**Information commands:**', '`roleinfo` `serverinfo` `botinfo` `userinfo` `profile` `level`')
     .addField('**Masters exclusive:**', '`setbotname` `setinv` `seton` `setdnd` `setidle` `eval` `restart` `reload`')
-	.addField('**Music commands:**', '``comming very soon``')
-    .addField('**More help:**', 'for more help type ```'+ prefix +'help <command>\n     or\n'+ prefix +'h <command>```')	 
+	.addField('**Music commands:**', '``coming very soon``')
     .setDescription(`commands with a "*" are stll being worked on`)
     .setFooter(`Requested by: ${message.member.displayName}`, `${message.author.avatarURL}`)
     message.channel.send({embed: RichEmbed});
