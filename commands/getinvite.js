@@ -47,6 +47,7 @@ if (uwu){
 	  .addField('**Invite link:**', `${invite}`)
 	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
   message.author.send({embed: mbed})
+	  })
 	  }
 	  if (!onrinv && onr){
 		chan.createInvite({ maxAge: 0 })
