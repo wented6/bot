@@ -9,7 +9,7 @@ module.exports.run = async (client,message,args) => {
 	
 	if (!lvls[message.guild.id]){
 		lvls[message.guild.id] = {
-			lvls: "true"
+			lvls: "false"
 		}
 	}
 	
@@ -39,6 +39,11 @@ if (!onoff) {
 	console.log(`${message.member.displayName} has Enabled the leveling system for the server: "${message.guild}"`);
   }
   if (onoff == "off"){
+if (!lvls[message.guild.id]){
+		lvls[message.guild.id] = {
+			lvls: "false"
+		}
+	}
 	if (lvls[message.guild.id].lvls == "true"){
 		lvls[message.guild.id] = {
 			lvls: "false"
