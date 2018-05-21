@@ -92,7 +92,7 @@ client.on('message', async message => {
   }
   if(!lvls[message.guild.id]){
     lvls[message.guild.id] = {
-      lvls: "true"
+      lvls: "false"
     };
   }
   if(!cookies[message.author.id]){
@@ -125,7 +125,7 @@ client.on('message', async message => {
   let levelmsg = lvlmsg[message.guild.id].lvlmsg;
   let cokis = cookies[message.author.id].cookies;
   
-  if (lvls[message.guild.id].lvls == "true"){
+  if (lvls[message.guild.id].lvls === "true"){
   let curxp = xp[message.author.id].xp;
   let curlvl = xp[message.author.id].level;
   let nxtLvl = xp[message.author.id].level * 800;
