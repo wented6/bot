@@ -13,18 +13,42 @@ if (uwu){
 	  .then(invites => {
 	  let onrinv = invites.find(invite => invite.inviter.id === server.owner.id === true)
 	  let chan = server.channels.find("name","general");
-	  if (onrinv) {
+          let onr = server.owner;
+	  if (onrinv && onr) {
 	  let mbed = new Discord.RichEmbed()
 	  .setTitle(`${uwu}:`)
 	  .setThumbnail(`${server.iconURL}`)
 	  .setColor(`${message.member.displayHexColor}`)
-	  .addField('**Owned by:**', `${server.owner} / ${server.owner.displayName}`)
+	  .addField('**Owned by:**', `${onr} / ${onr.displayName}`)
 	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
 	  .addField('**Invite link:**', `${onrinv}`)
 	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
   message.author.send({embed: mbed})
 	  }
-	  if (!onrinv){
+          if (onrinv && !onr) {
+	  let mbed = new Discord.RichEmbed()
+	  .setTitle(`${uwu}:`)
+	  .setThumbnail(`${server.iconURL}`)
+	  .setColor(`${message.member.displayHexColor}`)
+	  .addField('**Owned by:**', `Noone`)
+	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
+	  .addField('**Invite link:**', `${onrinv}`)
+	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
+  message.author.send({embed: mbed})
+	  }
+          if (!onrinv && !onr) {
+                chan.createInvite({ maxAge: 0 })
+	  .then(invite => {
+	  let mbed = new Discord.RichEmbed()
+	  .setTitle(`${uwu}:`)
+	  .setThumbnail(`${server.iconURL}`)
+	  .setColor(`${message.member.displayHexColor}`)
+	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
+	  .addField('**Invite link:**', `${invite}`)
+	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
+  message.author.send({embed: mbed})
+	  }
+	  if (!onrinv && onr){
 		chan.createInvite({ maxAge: 0 })
 	  .then(invite => {
 	  let mbed = new Discord.RichEmbed()
@@ -49,25 +73,49 @@ message.guild.fetchInvites()
 	  let onrinv = invites.find(invite => invite.inviter.id === message.guild.owner.id === true)
 	  let ppl = message.guild.members.filter(mem => mem.user.bot === false).size;
       let bots = message.guild.members.filter(mem => mem.user.bot === true).size;
-	  if (onrinv){
+	let onr = message.guild.owner;
+	  if (onrinv && onr){
 	  let mbed = new Discord.RichEmbed()
 	  .setTitle(`${message.guild}:`)
 	  .setColor(`${message.member.displayHexColor}`)
 	  .setThumbnail(`${message.guild.iconURL}`)
-	  .addField('**Owned by:**', `${message.guild.owner} / ${message.guild.owner.displayName}`)
+	  .addField('**Owned by:**', `${onr} / ${onr.displayName}`)
 	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
 	  .addField('**Invite link:**', `${onrinv}`)
 	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
   message.author.send({embed: mbed})
   }
-  if (!onrinv) {
+if (onrinv && !onr){
+	  let mbed = new Discord.RichEmbed()
+	  .setTitle(`${message.guild}:`)
+	  .setColor(`${message.member.displayHexColor}`)
+	  .setThumbnail(`${message.guild.iconURL}`)
+	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
+	  .addField('**Invite link:**', `${onrinv}`)
+	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
+  message.author.send({embed: mbed})
+  }
+  if (!onrinv && onr) {
 	  message.channel.createInvite({ maxAge: 0 })
 	  .then(invite => {
 		  let mbed = new Discord.RichEmbed()
 	  .setTitle(`${message.guild}:`)
 	  .setColor(`${message.member.displayHexColor}`)
 	  .setThumbnail(`${message.guild.iconURL}`)
-	  .addField('**Owned by:**', `${message.guild.owner} / ${message.guild.owner.displayName}`)
+	  .addField('**Owned by:**', `${onr} / ${onr.displayName}`)
+	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
+	  .addField('**Invite link:**', `${invite}`)
+	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
+      message.author.send({embed: mbed})
+	  })
+  }
+if (!onrinv && !onr) {
+	  message.channel.createInvite({ maxAge: 0 })
+	  .then(invite => {
+		  let mbed = new Discord.RichEmbed()
+	  .setTitle(`${message.guild}:`)
+	  .setColor(`${message.member.displayHexColor}`)
+	  .setThumbnail(`${message.guild.iconURL}`)
 	  .addField('**Users**', `${ppl} Members, ${bots} bots`)
 	  .addField('**Invite link:**', `${invite}`)
 	  .setFooter(`Requested in: ${message.guild}`, `${message.author.avatarURL}`)
