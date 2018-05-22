@@ -15,6 +15,7 @@ const clean = text => {
       const code = args.join(" ");
       let evaled = eval(code);
 
+      if (!code)return message.channel.send("Please enter smth to eval");
       if (typeof evaled !== "string")
         evaled = require("util").inspect(evaled);
 	
@@ -32,7 +33,8 @@ const clean = text => {
      .setTimestamp()
      .setColor(0x00fff0)
      .addField('**Input:**', '```'+ code +'```')
-	 .addField('**Output:**', '```'+ clean(evaled) +'```')
+     .addField('**Output:**', '```'+ clean(evaled) +'```')
+     .addField('**Type of:**', '```'+ typeof evaled +'```')
       message.channel.send({embed: evbed});
     
 	} catch (err) {
