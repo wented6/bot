@@ -275,7 +275,6 @@ client.on('message', async message => {
 	
 async function handleVideo(video, message, voiceChannel, playlist = false) {
 	const serverQueue = queue.get(message.guild.id);
-	console.log(video);
 	const song = {
 		id: video.id,
 		title: Util.escapeMarkdown(video.title),
@@ -305,7 +304,6 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		}
 	} else {
 		serverQueue.songs.push(song);
-		console.log(serverQueue.songs);
 		if (playlist) return undefined;
 		else return message.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(30000)});
 	}
