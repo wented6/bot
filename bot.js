@@ -206,7 +206,7 @@ client.on('message', async message => {
 					.setTitle(`Song selection:`)
 					.setColor(`${message.member.displayHexColor}`)
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
-					.setFooter(`Please provide a value to select one of the search results ranging from 1-10.`, `${message.author.avatarURL}`)
+					.setFooter(`Please provide a value ranging from 1-10.`, `${message.author.avatarURL}`)
 					message.channel.send({embed: bed}).then(msg => {msg.delete(30000)});
 					message.delete(25000);
 					message.delete(30000);
