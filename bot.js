@@ -246,12 +246,17 @@ client.on('message', async message => {
 		return undefined;
 	} else if (command === `volume`) {
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
-		if (!serverQueue) return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
-		if (!args[1]) return message.channel.send(`The current volume is: **${serverQueue.volume}**`).then(msg=>{msg.delete(10000)});
+		if (!serverQueue)return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
+		if (!args[1]){
+		message.channel.send(`The current volume is: **${serverQueue.volume}**`).then(msg=>{msg.delete(10000)});
+		message.delete(10000);
+		}
+		if (args[1]){
 		serverQueue.volume = args[1];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
 		message.channel.send(`I set the volume to: **${args[1]}**`).then(msg=>{msg.delete(10000)});
 		message.delete(10000);
+		}
 	} else if (command === `np`) {
 		message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
