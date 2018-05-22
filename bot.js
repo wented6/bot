@@ -234,6 +234,7 @@ client.on('message', async message => {
 		if (!serverQueue) return message.channel.send('There is nothing playing that I could skip for you.').then(msg=>{msg.delete(10000)});
 		serverQueue.connection.dispatcher.end();
 		message.channel.send('Skip command has been used').then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 		return undefined;
 } else if (command === `stop`) {
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
@@ -241,6 +242,7 @@ client.on('message', async message => {
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end();
 		message.channel.send('Stop command has been used!').then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 		return undefined;
 	} else if (command === `volume`) {
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
@@ -249,29 +251,36 @@ client.on('message', async message => {
 		serverQueue.volume = args[1];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
 		return message.channel.send(`I set the volume to: **${args[1]}**`).then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 	} else if (command === `np`) {
 		return message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}`)
 		.addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
 		return message.channel.send(embed).then(msg=>{msg.delete(30000)});
+		message.delete(20000);
         if(serverQueue.songs.size >= "12")return message.channel.send('There are more than 11 songs in queue').then(msg=>{msg.delete(10000)});
 	} else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
 			return message.channel.send('I Paused the music for you').then(msg=>{msg.delete(10000)});
+			message.delete(10000);
 		}
 		return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 	} else if (command === `resume`) {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
 			return message.channel.send("i've resumed the music").then(msg=>{msg.delete(10000)});
+			message.delete(10000);
 		}
 		return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
+		message.delete(10000);
 	}
 	
 async function handleVideo(video, message, voiceChannel, playlist = false) {
