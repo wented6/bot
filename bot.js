@@ -219,7 +219,7 @@ client.on('message', async message => {
 						console.error(err);
 						return message.channel.send('No or invalid value entered, cancelling video selection.').then(msg=>{msg.delete(10000)});
 					}
-					response.first().delete(25000);
+					response.first().delete(20000);
 					const videoIndex = parseInt(response.first().content);
 					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
 				} catch (err) {
@@ -250,10 +250,10 @@ client.on('message', async message => {
 		if (!args[1]) return message.channel.send(`The current volume is: **${serverQueue.volume}**`).then(msg=>{msg.delete(10000)});
 		serverQueue.volume = args[1];
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-		return message.channel.send(`I set the volume to: **${args[1]}**`).then(msg=>{msg.delete(10000)});
+		message.channel.send(`I set the volume to: **${args[1]}**`).then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 	} else if (command === `np`) {
-		return message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(10000)});
+		message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
@@ -267,19 +267,19 @@ client.on('message', async message => {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
-			return message.channel.send('I Paused the music for you').then(msg=>{msg.delete(10000)});
+			message.channel.send('I Paused the music for you').then(msg=>{msg.delete(10000)});
 			message.delete(10000);
 		}
-		return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
+		message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 	} else if (command === `resume`) {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
-			return message.channel.send("i've resumed the music").then(msg=>{msg.delete(10000)});
+			message.channel.send("i've resumed the music").then(msg=>{msg.delete(10000)});
 			message.delete(10000);
 		}
-		return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
+		message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 	}
 	
