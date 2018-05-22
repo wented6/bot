@@ -262,7 +262,7 @@ client.on('message', async message => {
           let embed = new Discord.RichEmbed()
           .setColor(`${message.member.displayHexColor}`)
           .addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
-          .addField('**Time:**', `Elapsed: ${serverQueue.connection.dispatcher.totalStreamTime / 1000} seconds / total: ${serverQueue.songs[0].duration.map(d=>d)}`)
+          .addField('**Time:**', `Elapsed: ${serverQueue.connection.dispatcher.totalStreamTime / 1000} seconds / total: ${serverQueue.songs[0].duration.hours}:${serverQueue.songs[0].duration.minutes}:${serverQueue.songs[0].duration.seconds}`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
