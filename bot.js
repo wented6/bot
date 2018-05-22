@@ -170,7 +170,7 @@ client.on('message', async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
   const searchString = args.slice(1).join(' ');
-  const url = message.content.includes("https://www.youtube.com/watch?v=");
+  const url = message.content.split(" ").slice(1).join(" ");
   const serverQueue = queue.get(message.guild.id);
   let command = message.content.toLowerCase().split(" ")[0];
   command = command.slice(prefix.length);
