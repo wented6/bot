@@ -215,11 +215,11 @@ client.on('message', async message => {
 							time: 20000,
 							errors: ['time']
 						});
-						message.delete(25000);
 					} catch (err) {
 						console.error(err);
 						return message.channel.send('No or invalid value entered, cancelling video selection.').then(msg=>{msg.delete(10000)});
 					}
+					response.first().delete(25000);
 					const videoIndex = parseInt(response.first().content);
 					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
 				} catch (err) {
