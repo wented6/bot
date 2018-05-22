@@ -250,6 +250,7 @@ client.on('message', async message => {
 		return message.channel.send(`I set the volume to: **${args[1]}**`);
 	} else if (command === `np`) {
 		return message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`);
+		console.log(serverQueue.songs[0].duration);
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
@@ -275,7 +276,6 @@ client.on('message', async message => {
 	
 async function handleVideo(video, message, voiceChannel, playlist = false) {
 	const serverQueue = queue.get(message.guild.id);
-	console.log(video);
 	const song = {
 		id: video.id,
 		title: Util.escapeMarkdown(video.title),
@@ -305,7 +305,6 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		}
 	} else {
 		serverQueue.songs.push(song);
-		console.log(serverQueue.songs);
 		if (playlist) return undefined;
 		else return message.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(30000)});
 	}
