@@ -259,7 +259,11 @@ client.on('message', async message => {
 		message.delete(10000);
 		}
 	} else if (command === `np`) {
-		message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(15000)});
+          let embed = new Discord.RichEmbed()
+          .setColor(`${message.member.displayHexColor}`)
+          .addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
+          .addField('**Time:**', `Elapsed: ${serverQueue.dispatcher.totalStreamTime} / total: ${serverQueue.songs[0].duration}`)
+		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
