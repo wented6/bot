@@ -208,7 +208,6 @@ client.on('message', async message => {
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Please provide a value ranging from 1-10.`, `${message.author.avatarURL}`)
 					message.channel.send({embed: bed}).then(msg => {msg.delete(30000)});
-					message.delete(25000);
 					message.delete(30000);
 					try {
 						var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
@@ -222,6 +221,7 @@ client.on('message', async message => {
 					}
 					const videoIndex = parseInt(response.first().content);
 					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+					message.delete(25000);
 				} catch (err) {
 					console.error(err);
 					return message.channel.send('I could not obtain any search results.').then(msg=>{msg.delete(10000)});
