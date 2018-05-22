@@ -34,7 +34,7 @@ const clean = text => {
      .setColor(0x00fff0)
      .addField('**Input:**', '```'+ code +'```')
      .addField('**Output:**', '```'+ clean(evaled) +'```')
-     .addField('**Type of:**', '```'+ typeof evaled +'```')
+     .addField('**Type of:**', '```'+ typeof(evaled) +'```')
       message.channel.send({embed: evbed});
     
 	} catch (err) {
