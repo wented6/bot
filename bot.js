@@ -208,6 +208,7 @@ client.on('message', async message => {
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
 					.setFooter(`Please provide a value to select one of the search results ranging from 1-10.`, `${message.author.avatarURL}`)
 					message.channel.send({embed: bed}).then(msg => {msg.delete(30000)});
+					message.delete(25000);
 					message.delete(30000);
 					try {
 						var response = await message.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
@@ -215,7 +216,6 @@ client.on('message', async message => {
 							time: 20000,
 							errors: ['time']
 						});
-						message.delete(30000);
 					} catch (err) {
 						console.error(err);
 						return message.channel.send('No or invalid value entered, cancelling video selection.').then(msg=>{msg.delete(10000)});
