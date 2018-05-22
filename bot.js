@@ -245,16 +245,17 @@ client.on('message', async message => {
 		message.delete(10000);
 		return undefined;
 	} else if (command === `volume`) {
+		const uwu = message.content.split(" ").slice(1).join(" ");
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
 		if (!serverQueue)return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
-		if (!args[1]){
+		if (!uwu){
 		message.channel.send(`The current volume is: **${serverQueue.volume}**`).then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 		}
-		if (args[1]){
-		serverQueue.volume = args[1];
-		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-		message.channel.send(`I set the volume to: **${args[1]}**`).then(msg=>{msg.delete(10000)});
+		if (uwu){
+		serverQueue.volume = uwu;
+		serverQueue.connection.dispatcher.setVolumeLogarithmic(uwu / 5);
+		message.channel.send(`I set the volume to: **${uwu}**`).then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 		}
 	} else if (command === `np`) {
