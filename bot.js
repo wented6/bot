@@ -215,6 +215,7 @@ client.on('message', async message => {
 							time: 20000,
 							errors: ['time']
 						});
+						message.delete(30000);
 					} catch (err) {
 						console.error(err);
 						return message.channel.send('No or invalid value entered, cancelling video selection.').then(msg=>{msg.delete(10000)});
