@@ -187,7 +187,7 @@ client.on('message', async message => {
 			return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 		}
 
-		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/list(.*)$/)) {
+		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
 			for (const video of Object.values(videos)) {
@@ -266,7 +266,7 @@ client.on('message', async message => {
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}`)
 		.addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
-		return message.channel.send(embed).then(msg=>{msg.delete(30000)});
+		message.channel.send(embed).then(msg=>{msg.delete(30000)});
 		message.delete(20000);
         if(serverQueue.songs.size >= "12")return message.channel.send('There are more than 11 songs in queue').then(msg=>{msg.delete(10000)});
 	} else if (command === `pause`) {
