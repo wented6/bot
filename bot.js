@@ -275,7 +275,7 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField("**Now Playing:**", `${serverQueue.songs[0].title}`)
-	    .addField("**Time:**", `Elapsed: ${elapsd}\nTotal: ${serverQueue.songs[0].duration.hours} hours ${serverQueue.songs[0].duration.minutes} minutes : ${serverQueue.songs[0].duration.seconds} seconds`)
+	    .addField("**Time:**", `Elapsed: ${elapsd}\nTotal: ${serverQueue.songs[0].duration.hours} hours, ${serverQueue.songs[0].duration.minutes} minutes, ${serverQueue.songs[0].duration.seconds} seconds`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
