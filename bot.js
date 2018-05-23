@@ -23,19 +23,6 @@ const youtube = new YouTube(GOOGLE_API_KEY);
 
 const queue = new Map();
 
-const parseTime = function(milliseconds) {
-  var seconds = Math.floor(milliseconds/1000); milliseconds %= 1000;
-  var minutes = Math.floor(seconds/60); seconds %= 60;
-  var hours = Math.floor(minutes/60); minutes %= 60;
-  var days = Math.floor(hours/24); hours %= 24;
-  var written = false;
-  return(days?(written=true,days+" days"):"")+(written?", ":"")
-      +(hours?(written=true,hours+" hours"):"")+(written?", ":"")
-      +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?", ":"")
-      +(milliseconds?milliseconds+" milliseconds":"");
-};
-
 let init = async () => {
 
 const cmdFiles = await readdir("./commands/");
@@ -272,10 +259,23 @@ client.on('message', async message => {
 		message.delete(10000);
 		}
 	} else if (command === `np`) {
+	const parseTime = function(milliseconds) {
+    var seconds = Math.floor(milliseconds/1000); milliseconds %= 1000;
+    var minutes = Math.floor(seconds/60); seconds %= 60;
+    var hours = Math.floor(minutes/60); minutes %= 60;
+    var days = Math.floor(hours/24); hours %= 24;
+    var written = false;
+    return(days?(written=true,days+" days"):"")+(written?", ":"")
+      +(hours?(written=true,hours+" hours"):"")+(written?", ":"")
+      +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
+      +(seconds?(written=true,seconds+" seconds"):"")+(written?", ":"")
+      +(milliseconds?milliseconds+" milliseconds":"");
+};
+let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField("**Now Playing:**", `${serverQueue.songs[0].title}`)
-	.addField("**Time:**", `Elapsed: ${parseTime(${serverQueue.connection.dispatcher.totalStreamTime})}\nTotal: ${serverQueue.songs[0].duration.hours} hours, ${serverQueue.songs[0].duration.minutes} minutes, ${serverQueue.songs[0].duration.seconds} seconds`)
+	    .addField("**Time:**", `Elapsed: ${elapsd}\nTotal: ${serverQueue.songs[0].duration.hours} hours ${serverQueue.songs[0].duration.minutes} minutes : ${serverQueue.songs[0].duration.seconds} seconds`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
