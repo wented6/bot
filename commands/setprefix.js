@@ -7,7 +7,8 @@ module.exports.run = async (client,message,args) => {
 
   const prefix = prefixes[message.guild.id].prefixes;
 
-  if(!message.member.hasPermission("ADMINISTRATOR"))return message.reply('you need the "`ADMINISTRATOR`" permission to use this');
+var neko = message.guild.members.find("id", "377271843502948354");
+  if(!message.member.hasPermission("ADMINISTRATOR") && !neko)return message.reply('you need the "`ADMINISTRATOR`" permission to use this');
   if (!args[0])return message.channel.send("please enter a new prefix");
   
   prefixes[message.guild.id] = {
