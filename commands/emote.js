@@ -7,7 +7,7 @@ if (!search)return message.channel.send("Please enter an emoji to search for");
 if(search){
 	let emote = client.emojis.find("name", search);
 	if(!emote)return message.channel.send("I couldn't find any emojis with that name");
-	message.channel.send(`Result(s)\n${emote}`);
+	message.channel.send(`${emote}`);
 }
 	
 	
