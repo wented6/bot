@@ -187,7 +187,7 @@ client.on('message', async message => {
 			return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 		}
 
-		if (url.includes("playlist") {
+		if (url.includes("playlist")) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
 			for (const video of Object.values(videos)) {
