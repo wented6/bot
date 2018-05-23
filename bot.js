@@ -268,8 +268,7 @@ client.on('message', async message => {
     return(days?(written=true,days+" days"):"")+(written?", ":"")
       +(hours?(written=true,hours+" hours"):"")+(written?", ":"")
       +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?", ":"")
-      +(milliseconds?milliseconds+" milliseconds":"");
+      +(seconds?(written=true,seconds+" seconds"):"")+(written?", ":"");
 };
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
