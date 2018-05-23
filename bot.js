@@ -161,7 +161,7 @@ client.on('message', async message => {
   }
   
   
-  var parseTime = function(milliseconds) {
+const parseTime = function(milliseconds) {
   var seconds = Math.floor(milliseconds/1000); milliseconds %= 1000;
   var minutes = Math.floor(seconds/60); seconds %= 60;
   var hours = Math.floor(minutes/60); minutes %= 60;
