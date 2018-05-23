@@ -169,7 +169,7 @@ client.on('message', async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
-  const searchString = args.slice(1).join(' ');
+  const searchString = message.content.split(" ").slice(1).join(" ");
   const url = message.content.split(" ").slice(1).join(" ");
   const serverQueue = queue.get(message.guild.id);
   let command = message.content.toLowerCase().split(" ")[0];
@@ -275,19 +275,21 @@ client.on('message', async message => {
 			serverQueue.connection.dispatcher.pause();
 			message.channel.send('I Paused the music for you').then(msg=>{msg.delete(10000)});
 			message.delete(10000);
-		}
+		} else {
 		message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
+		}
 	} else if (command === `resume`) {
 		if (serverQueue && !serverQueue.playing) {
 			serverQueue.playing = true;
 			serverQueue.connection.dispatcher.resume();
 			message.channel.send("i've resumed the music").then(msg=>{msg.delete(10000)});
 			message.delete(10000);
-		}
+		} else {
 		message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 	}
+  }
 	
 async function handleVideo(video, message, voiceChannel, playlist = false) {
 	const serverQueue = queue.get(message.guild.id);
