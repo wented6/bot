@@ -187,7 +187,7 @@ client.on('message', async message => {
 			return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 		}
 
-		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+		if (url.includes("playlist") {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
 			for (const video of Object.values(videos)) {
@@ -259,8 +259,7 @@ client.on('message', async message => {
 		message.delete(10000);
 		}
 	} else if (command === `np`) {
-         message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(15000)});
-		console.log(serverQueue.songs[0]);
+		message.channel.send(`Now playing: **${serverQueue.songs[0].title}**`).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let embed = new Discord.RichEmbed()
