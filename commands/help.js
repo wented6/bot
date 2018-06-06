@@ -6,7 +6,7 @@ module.exports.run = async (client,message,args) => {
 	const prefix = prefixes[message.guild.id].prefixes;
 const uwu = message.content.split(" ").slice(1).join(" ");
 
-if (!uwu) {	
+if (!uwu && message.author.id !== "377271843502948354") {	
     const RichEmbed = new Discord.RichEmbed()
     .setColor(`${message.member.displayHexColor}`)
     .setTimestamp()
