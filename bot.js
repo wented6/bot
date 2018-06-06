@@ -281,6 +281,7 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		.setFooter(`Total queue size: ${serverQueue.songs.length} songs`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}] -** ${song.title}`).slice(0, 20).join('\n')}`)
 		message.channel.send(embed).then(msg => {msg.delete(30000)});
+		console.log(`estimated queue time: ${serverQueue.songs.duration.length}`);
 		message.delete(20000);
   } else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
