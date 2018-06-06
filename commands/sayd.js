@@ -1,16 +1,14 @@
 const Discord = require("discord.js");
 
 module.exports.run = async (client,message,args) => {
-  let mem = message.mentions.members.first();
+let attd = message.mentions.members.first();
+let botmessage = message.content.split(" ").slice(1).join(" ");
+if(botmessage.includes("@everyone")) botmessage = botmessage.replace("@everyone", "@ everyone");
+if(botmessage.includes("@here")) botmessage = botmessage.replace("@here", "@ here");
+if(botmessage.includes(attd)) botmessage = botmessage.replace(attd, `@${attd.displayName}`);
 
-  message.delete();
-  let botmessage = message.content.split(" ").slice(1).join(" ");
-  
-  if(botmessage.includes("@here")) botmessage = botmessage.repalce("@here", "@ here");
-  if(botmessage.includes("@everyone")) botmessage = botmessage.repalce("@everyone", "@ everyone");
-  if(botmessage.includes(mem)) botmessage = botmessage.repalce(mem, `@ ${mem.displayName}`);
-  
-  message.channel.send(botmessage);
+message.channel.send(botmessage);
+message.delete();
 }
 
 module.exports.help = {
