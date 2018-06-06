@@ -278,10 +278,11 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let i = 0;
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
+		.setFooter(`requested by pl`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}] -** ${song.title}`).slice(0, 20).join('\n')}`)
 		message.channel.send(embed)
-		.then(()=>console.log(`${serverQueue.songs.size} songs || ${serverQueue.songs.duration} time`))
-		.then(msg=>{msg.delete(30000)});
+		.then(()=>console.log(`${serverQueue.songs.size} songs || ${serverQueue.duration} time`))
+		.then(()=>message.delete(30000));
 		message.delete(20000);
   } else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
