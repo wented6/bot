@@ -277,7 +277,7 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 	} else if (command === `queue`) {
 		let i = 0;
 		let s = ++i;
-		if(s == 1) s = s.toString(1).replace("1", "NP");
+		if(s == 1) s = s.toString().replace("1", "NP");
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${s}] -** ${song.title}`).slice(0, 20).join('\n')}`)
