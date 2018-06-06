@@ -276,7 +276,9 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let i = 0;
-		if(i == "1") i = i.repalce("1", "NP");
+		if(i === 1){
+			i = i.repalce(1, "NP");
+		}
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}]** ${song.title}`).slice(0, 20).join('\n')}`)
