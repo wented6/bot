@@ -4,14 +4,12 @@ module.exports.run = async (client,message,args) => {
   let mem = message.mentions.members.first();
 
   message.delete();
-  let botmessage = args.join(" ");
+  let botmessage = message.content.split(" ").slice(1).join(" ");
   
   if(botmessage.includes("@here")) botmessage = botmessage.repalce("@here", "@ here");
   if(botmessage.includes("@everyone")) botmessage = botmessage.repalce("@everyone", "@ everyone");
   if(botmessage.includes(mem)) botmessage = botmessage.repalce(mem, `@ ${mem.displayName}`);
   
-
-
   message.channel.send(botmessage);
 }
 
