@@ -270,15 +270,17 @@ client.on('message', async message => {
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
-		.setFooter(`Elapsed time: ${elapsd}`, `${message.author.avatarURL}`)
+		.setFooter(`Elapsed time: ${elapsd}`)
 		.addField("**Now Playing:**", `${serverQueue.songs[0].title}`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let i = 0;
+		let s = ++i;
+		if(s == 1) s = s.toString(1).replace("1", "NP");
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
-		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[ ${++i} ] -** ${song.title}`).slice(0, 20).join('\n')}`)
+		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${s}] -** ${song.title}`).slice(0, 20).join('\n')}`)
 		message.channel.send(embed).then(msg=>{msg.delete(30000)});
 		message.delete(20000);
   } else if (command === `pause`) {
@@ -350,10 +352,14 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true })
 		.on('end', reason => {
-			if(reason == 'stop')return;
+			if(reason == 'skip'||'stop'){
+			serverQueue.songs.shift();
+			play(guild, serverQueue.songs[0]);
+			} else {
 			message.channel.send('Song ended').then(msg => {msg.delete(30000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
+			}
 		})
 		.on('error', error => console.error(error));
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
