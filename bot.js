@@ -1,3 +1,4 @@
+const { Util } = require("discord.js");
 const Discord = require('discord.js');
 const fs = require('fs');
 const YouTube = require('simple-youtube-api');
@@ -181,6 +182,7 @@ client.on('message', async message => {
 		if (!permissions.has('SPEAK')) {
 			return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 		}
+
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
@@ -188,8 +190,8 @@ client.on('message', async message => {
 				const video2 = await youtube.getVideoByID(video.id);
 				await handleVideo(video2, message, voiceChannel, true); 
 			}
-			message.channel.send(`Playlist: **${playlist.title}** has been added to the queue`).then(msg=>{msg.delete(30000)});
-		  message.delete(30000);
+			message.channel.send(`Playlist: **${playlist.title}** has been added to the queue!`).then(msg=>{msg.delete(30000)});
+	    message.delete(30000)	
 		} else {
 			try {
 				var video = await youtube.getVideo(url);
@@ -201,7 +203,7 @@ client.on('message', async message => {
 					.setTitle(`Song selection:`)
 					.setColor(`${message.member.displayHexColor}`)
 					.setDescription(`${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}`)
-					.setFooter(`Please provide a value ranging from 1-10.`, `${message.author.avatarURL}`)
+					.setFooter(`Please provide a value from 1-10.`, `${message.author.avatarURL}`)
 					message.channel.send({embed: bed}).then(msg => {msg.delete(30000)});
 					message.delete(30000);
 					try {
@@ -263,7 +265,7 @@ client.on('message', async message => {
     return(days?(written=true,days+" days"):"")+(written?", ":"")
       +(hours?(written=true,hours+" hour(s)"):"")+(written?", ":"")
       +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?"":"");
+      +(seconds?(written=true,seconds+" seconds"):"")+(written?" ":"");
 };
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
@@ -274,12 +276,11 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let i = 0;
-		if (i.includes("1")) i = i.repalce("1", "NP");
+		if(i == "1") i = i.repalce("1", "NP");
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}]** ${song.title}`).slice(20).join('\n')}`)
 		message.channel.send(embed).then(msg=>{msg.delete(30000)});
-		console.log(`${serverQueue.songs.duration}`);
 		message.delete(20000);
   } else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
@@ -333,7 +334,7 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 		}
 	} else {
 		serverQueue.songs.push(song);
-		if(playlist)return;
+		if (playlist)return;
 		else return message.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(30000)});
 	}
 	return undefined;
@@ -350,7 +351,7 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true })
 		.on('end', reason => {
-			if(reason === 'skip'||'stop')return;
+			if(reason == 'skip'||'stop')return;
 			message.channel.send('Song ended').then(msg => {msg.delete(30000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
