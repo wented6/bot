@@ -276,11 +276,12 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		message.delete(10000);
 	} else if (command === `queue`) {
 		let i = 0;
-		if(i == 1) i = i.toString().replace("1", "NP");
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}] -** ${song.title}`).slice(0, 20).join('\n')}`)
-		message.channel.send(embed).then(msg=>{msg.delete(30000)});
+		message.channel.send(embed)
+		.then(()=>console.log(`${serverQueue.songs.size} songs || ${serverQueue.songs.duration} time`))
+		.then(msg=>{msg.delete(30000)});
 		message.delete(20000);
   } else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
