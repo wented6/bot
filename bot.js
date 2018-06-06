@@ -353,7 +353,7 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true })
 		.on('end', reason => {
-			if(reason == 'skip'||'stop')return;
+			if(reason == 'stop')return;
 			message.channel.send('Song ended').then(msg => {msg.delete(30000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
