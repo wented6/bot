@@ -302,7 +302,7 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 	}
-  }
+}
 	
 async function handleVideo(video, message, voiceChannel, playlist = false) {
 	const serverQueue = queue.get(message.guild.id);
@@ -360,7 +360,7 @@ function play(guild, song) {
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
 	serverQueue.textChannel.send(`Started playing: **${song.title}**`).then(msg => {msg.delete(30000)});
-    }
+}
  
 
   let commandfile = client.commands.get(cmd.slice(prefix.length));
