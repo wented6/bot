@@ -1,4 +1,3 @@
-const { Util } = require('discord.js');
 const Discord = require('discord.js');
 const fs = require('fs');
 const YouTube = require('simple-youtube-api');
@@ -131,7 +130,7 @@ client.on('message', async message => {
   let levelmsg = lvlmsg[message.guild.id].lvlmsg;
   let cokis = cookies[message.author.id].cookies;
   
-  if (lvls[message.guild.id].lvls === "true"){
+	if(lvls[message.guild.id].lvls === "true"){
   let curxp = xp[message.author.id].xp;
   let curlvl = xp[message.author.id].level;
   let nxtLvl = xp[message.author.id].level * 800;
@@ -140,19 +139,19 @@ client.on('message', async message => {
     xp[message.author.id].level = curlvl + 1;
 	cookies[message.author.id].cookies = cokis + 2;
     message.channel.send(`${message.member.displayName}, ${levelmsg}`).then(msg => {msg.delete(5000)});
-  }
+	}
   fs.writeFile("./jsons/xp.json", JSON.stringify(xp), (err) => {
     if(err) console.log(err)
   });
   fs.writeFile("./jsons/cookies.json", JSON.stringify(cookies), (err) => {
     if(err) console.log(err)
-  });
-  }
+	});
+}
   
   let prefix = prefixes[message.guild.id].prefixes;
   
-  if (message.content.startsWith(prefix) && client.user.presence.status === "invisible"){
-	  if (message.author.id !== '377271843502948354')return;
+  if(message.content.startsWith(prefix) && client.user.presence.status === "invisible"){
+	  if(message.author.id !== '377271843502948354')return;
   }
 
   if (message.content == "Nb.prefix"){
@@ -160,10 +159,6 @@ client.on('message', async message => {
 	  message.channel.send('The prefix for this server is: ``'+ prefix +'``').then(msg => {msg.delete(15000)});
   }
   
-  
-
-  
- 
   if(!message.content.startsWith(prefix)) return;
   
   let messageArray = message.content.split(" ");
@@ -186,7 +181,6 @@ client.on('message', async message => {
 		if (!permissions.has('SPEAK')) {
 			return message.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!');
 		}
-
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await youtube.getPlaylist(url);
 			const videos = await playlist.getVideos();
@@ -194,7 +188,8 @@ client.on('message', async message => {
 				const video2 = await youtube.getVideoByID(video.id);
 				await handleVideo(video2, message, voiceChannel, true); 
 			}
-			return message.channel.send(`Playlist: **${playlist.title}** has been added to the queue!`).then(msg=>{msg.delete(30000)});
+			message.channel.send(`Playlist: **${playlist.title}** has been added to the queue`).then(msg=>{msg.delete(30000)});
+		  message.delete(30000);
 		} else {
 			try {
 				var video = await youtube.getVideo(url);
@@ -232,7 +227,7 @@ client.on('message', async message => {
 	} else if (command === `skip`) {
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
 		if (!serverQueue) return message.channel.send('There is nothing playing that I could skip for you.').then(msg=>{msg.delete(10000)});
-		serverQueue.connection.dispatcher.end();
+		serverQueue.connection.dispatcher.end('skip');
 		message.channel.send('Skip command has been used').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 		return undefined;
@@ -240,7 +235,7 @@ client.on('message', async message => {
 		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
 		if (!serverQueue) return message.channel.send('There is nothing playing that I could stop for you.').then(msg=>{msg.delete(10000)});
 		serverQueue.songs = [];
-		serverQueue.connection.dispatcher.end();
+		serverQueue.connection.dispatcher.end('stop');
 		message.channel.send('Stop command has been used!').then(msg=>{msg.delete(10000)});
 		message.delete(10000);
 		return undefined;
@@ -266,26 +261,27 @@ client.on('message', async message => {
     var days = Math.floor(hours/24); hours %= 24;
     var written = false;
     return(days?(written=true,days+" days"):"")+(written?", ":"")
-      +(hours?(written=true,hours+" hours"):"")+(written?", ":"")
+      +(hours?(written=true,hours+" hour(s)"):"")+(written?", ":"")
       +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?" ":"");
+      +(seconds?(written=true,seconds+" seconds"):"")+(written?"":"");
 };
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
+		.setFooter(`Elapsed time: ${elapsd}`, `${message.author.avatarURL}`)
 		.addField("**Now Playing:**", `${serverQueue.songs[0].title}`)
-	    .addField("**Time:**", `Elapsed: ${elapsd}\nTotal: ${serverQueue.songs[0].duration.hours} hours, ${serverQueue.songs[0].duration.minutes} minutes, ${serverQueue.songs[0].duration.seconds} seconds`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	} else if (command === `queue`) {
+		let i = 0;
+		if (i.includes("1")) i = i.repalce("1", "NP");
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
-		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**-** ${song.title}`).join('\n')}`)
-		.addField('**Now Playing:**', `${serverQueue.songs[0].title}`)
+		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}]** ${song.title}`).slice(20).join('\n')}`)
 		message.channel.send(embed).then(msg=>{msg.delete(30000)});
+		console.log(`${serverQueue.songs.duration}`);
 		message.delete(20000);
-        if(serverQueue.songs.size >= "12")return message.channel.send('There are more than 11 songs in queue').then(msg=>{msg.delete(10000)});
-	} else if (command === `pause`) {
+  } else if (command === `pause`) {
 		if (serverQueue && serverQueue.playing) {
 			serverQueue.playing = false;
 			serverQueue.connection.dispatcher.pause();
@@ -332,13 +328,12 @@ async function handleVideo(video, message, voiceChannel, playlist = false) {
 			queueConstruct.connection = connection;
 			play(message.guild, queueConstruct.songs[0]);
 		} catch (error) {
-			console.error(`I could not join the voice channel: ${error}`);
 			queue.delete(message.guild.id);
 			return message.channel.send(`I could not join the voice channel:\nERROR:\n${error}`).then(msg => {msg.delete(15000)});
 		}
 	} else {
 		serverQueue.songs.push(song);
-		if (playlist) return undefined;
+		if(playlist)return;
 		else return message.channel.send(` **${song.title}** has been added to the queue!`).then(msg => {msg.delete(30000)});
 	}
 	return undefined;
@@ -355,8 +350,7 @@ function play(guild, song) {
 
 	const dispatcher = serverQueue.connection.playStream(ytdl(song.url), { audioonly: true })
 		.on('end', reason => {
-			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
-			else console.log(reason);
+			if(reason === 'skip'||'stop')return;
 			message.channel.send('Song ended').then(msg => {msg.delete(30000)});
 			serverQueue.songs.shift();
 			play(guild, serverQueue.songs[0]);
