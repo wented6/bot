@@ -78,7 +78,7 @@ client.on('reconnecting', () => console.log('I am reconnecting now!'));
 client.on('resume', () => console.log('I have reconnected!'));
 
 client.on('message', async message => { 
-	if (message.author.bot) return undefined;
+	if (message.author.bot)return;
 	if (message.content.startsWith("Nb.") && message.channel.type !== "text")return mesage.reply("Please use my commands in a server");
 	
     if(!prefixes[message.guild.id]){
@@ -93,7 +93,7 @@ client.on('message', async message => {
   }
   if(!lvlmsg[message.guild.id]){
     lvlmsg[message.guild.id] = {
-      lvlmsg: "congrats on the lvl up"
+      lvlmsg: "{mem.nick}, congrats on the lvl up"
     };
   }
   if(!lvls[message.guild.id]){
@@ -139,7 +139,9 @@ client.on('message', async message => {
   if(nxtLvl <= xp[message.author.id].xp){
     xp[message.author.id].level = curlvl + 1;
 	cookies[message.author.id].cookies = cokis + 2;
-    message.channel.send(`${message.member.displayName}, ${levelmsg}`).then(msg => {msg.delete(5000)});
+	if(levelmsg.includes("{mem.nick}")) levelmsg = levelmsg.replace("{mem.nick}", `${message.member.displayName}`);
+    if(levelmsg.includes("{mem}")) levelmsg = levelmsg.replace("{mem}", `${message.author}`);
+	message.channel.send(`${levelmsg}`).then(msg => {msg.delete(5000)});
 	}
   fs.writeFile("./jsons/xp.json", JSON.stringify(xp), (err) => {
     if(err) console.log(err)
@@ -262,24 +264,36 @@ client.on('message', async message => {
     var hours = Math.floor(minutes/60); minutes %= 60;
     var days = Math.floor(hours/24); hours %= 24;
     var written = false;
-    return(days?(written=true,days+" days"):"")+(written?", ":"")
-      +(hours?(written=true,hours+" hour(s)"):"")+(written?", ":"")
-      +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?" ":"");
+    return(days?(written=true,days+"d"):"")+(written?":":"")
+      +(hours?(written=true,hours+"h"):"")+(written?":":"")
+      +(minutes?(written=true,minutes+"m"):"")+(written?":":"")
+      +(seconds?(written=true,seconds+"s"):"")+(written?"":"");
 };
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
+if(serverQueue.songs[0].duration.hours > 0 || !serverQueue.songs[0].duration.hours){
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
-		.setFooter(`Elapsed time: ${elapsd}`)
-		.addField("**Now Playing:**", `${serverQueue.songs[0].title}`)
+		.setThumbnail(`${serverQueue.songs[0].}`)
+		.setFooter(`Elapsed time: ${elapsd} / ${serverQueue.songs[0].duration.minutes}m:${serverQueue.songs[0].duration.seconds}s`)
+		.addField("**Now Playing:**", `[${serverQueue.songs[0].title}](https://youtube.com/watch?v=${serverQueue.songs[0].id})`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
+	}
+	if(serverQueue.songs[0].duration.hours < 0){
+		let embed = new Discord.RichEmbed()
+		.setColor(`${message.member.displayHexColor}`)
+		.setThumbnail(`${serverQueue.songs[0].thumbnails.default}`)
+		.setFooter(`Elapsed time: ${elapsd} / ${serverQueue.songs[0].duration.hours}h:${serverQueue.songs[0].duration.minutes}m:${serverQueue.songs[0].duration.seconds}s`)
+		.addField("**Now Playing:**", `[${serverQueue.songs[0].title}](https://youtube.com/watch?v=${serverQueue.songs[0].id})`)
+		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
+		message.delete(10000);
+	}
 	} else if (command === `queue`) {
 		let i = 0;
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.setFooter(`Total queue size: ${serverQueue.songs.length} songs`)
-		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}] -** ${song.title}`).slice(0, 20).join('\n')}`)
+		.addField('**Song Queue:**', `${serverQueue.songs.map(song => `**[${++i}] -** ${song.title}`).slice(0, 5).join('\n')}`)
 		message.channel.send(embed).then(msg => {msg.delete(30000)});
 	  message.delete(20000);
   } else if (command === `pause`) {
