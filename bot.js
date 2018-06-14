@@ -273,7 +273,7 @@ let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
 if(serverQueue.songs[0].duration.hours > 0 || !serverQueue.songs[0].duration.hours){
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
-		.setThumbnail(`${serverQueue.songs[0].}`)
+		.setThumbnail(`${serverQueue.songs[0].thumbnails.default}`)
 		.setFooter(`Elapsed time: ${elapsd} / ${serverQueue.songs[0].duration.minutes}m:${serverQueue.songs[0].duration.seconds}s`)
 		.addField("**Now Playing:**", `[${serverQueue.songs[0].title}](https://youtube.com/watch?v=${serverQueue.songs[0].id})`)
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
