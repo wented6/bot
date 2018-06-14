@@ -270,7 +270,7 @@ client.on('message', async message => {
       +(seconds?(written=true,seconds+"s"):"")+(written?"":"");
 };
 let elapsd = parseTime(`${serverQueue.connection.dispatcher.totalStreamTime}`);
-if(serverQueue.songs[0].duration.hours > 0){
+if(serverQueue.songs[0].duration.hours > "0"){
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.setThumbnail(`https://i.ytimg.com/vi/${serverQueue.songs[0].id}/maxresdefault.jpg`)
@@ -279,7 +279,7 @@ if(serverQueue.songs[0].duration.hours > 0){
 		message.channel.send({embed}).then(msg=>{msg.delete(15000)});
 		message.delete(10000);
 	}
-	if(serverQueue.songs[0].duration.hours < 0){
+	if(serverQueue.songs[0].duration.hours < "0"){
 		let embed = new Discord.RichEmbed()
 		.setColor(`${message.member.displayHexColor}`)
 		.setThumbnail(`https://i.ytimg.com/vi/${serverQueue.songs[0].id}/maxresdefault.jpg`)
