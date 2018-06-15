@@ -1,12 +1,13 @@
 const { Util } = require("discord.js");
 const Discord = require('discord.js');
 const fs = require('fs');
+const DBL = require("dblapi.js");
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 
-const { TOKEN, GOOGLE_API_KEY } = require('./config');
+const { TOKEN, GOOGLE_API_KEY, DBL_KEY } = require('./config');
 
 const prefixes = require("./jsons/prefixes.json");
 const xp = require("./jsons/xp.json");
@@ -18,6 +19,8 @@ const lvls = require("./jsons/guildlvl.json");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+
+const dbl = new DBL(DBL_KEY, client);
 
 const youtube = new YouTube(GOOGLE_API_KEY);
 
@@ -71,6 +74,12 @@ function game5() {
     setTimeout(game1, 30000);
 }
 
+client.on('ready', () => {
+    setInterval(() => {
+        dbl.postStats(client.guilds.size);
+    }, 60000);
+});
+
 client.on('disconnect', () => console.log('I just disconnected, making sure you know, I will reconnect now...'));
 
 client.on('reconnecting', () => console.log('I am reconnecting now!'));
@@ -93,7 +102,7 @@ client.on('message', async message => {
   }
   if(!lvlmsg[message.guild.id]){
     lvlmsg[message.guild.id] = {
-      lvlmsg: "{mem.nick}, congrats on the lvl up"
+      lvlmsg: "GG {mem.nick}, you just leveled up!"
     };
   }
   if(!lvls[message.guild.id]){
@@ -252,11 +261,15 @@ client.on('message', async message => {
 		message.delete(10000);
 		}
 		if (uwu){
+		if(uwu > 0 && uwu < 11){
+		if (!message.member.voiceChannel) return message.channel.send('You are not in a voice channel!').then(msg=>{msg.delete(10000)});
+		if (!serverQueue)return message.channel.send('There is nothing playing.').then(msg=>{msg.delete(10000)});
 		serverQueue.volume = uwu;
 		serverQueue.connection.dispatcher.setVolumeLogarithmic(uwu / 5);
 		message.channel.send(`I set the volume to: **${uwu}**`).then(msg=>{msg.delete(10000)});
 		message.delete(10000);
-		}
+		} else return message.channel.send("The volume can only be a number from 1 to 10");
+	}
 	} else if (command === `np`) {
 	const parseTime = function(milliseconds) {
     var seconds = Math.floor(milliseconds/1000); milliseconds %= 1000;
