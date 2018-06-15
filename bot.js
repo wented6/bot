@@ -7,9 +7,8 @@ const ytdl = require('ytdl-core');
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 
-const TOKEN = require('./config');
+const { TOKEN, GOOGLE_API_KEY } = require('./config');
 const DBL_KEY = require('./config');
-const GOOGLE_API_KEY = require('./config');
 
 const prefixes = require("./jsons/prefixes.json");
 const xp = require("./jsons/xp.json");
