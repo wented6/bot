@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require('fs');
 const parseTime = function(milliseconds) {
     var seconds = Math.floor(milliseconds/1000); milliseconds %= 1000;
     var minutes = Math.floor(seconds/60); seconds %= 60;
@@ -12,31 +13,42 @@ const parseTime = function(milliseconds) {
 };
 module.exports.run = async (client,message,args) => {
 if(message.author.id !== '377271843502948354')return;
+try{
+      const code = message.content.split(" ").slice(1).join(" ");
+      let evaled = eval(code);
 
-const input = args.join(' ');
-try {
-    
-    let output = await eval(input);
-    if (typeof output !== 'string') output = require('util').inspect(output, { depth: 0 });
-    
-    if (output.includes(client.token)) output = output.repalce(client.token, "that's a secret");
-    
-    if (output.length > 1024)return console.log(output) && message.channel.send(`Exceeding message length... printing in console.`);
-    
-    let embed = new Discord.RichEmbed()
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled, { depth: 0 });
+	
+if(evaled.length > 1024){
+fs.writeFile("./output.txt",(evaled), (err) => {
+if (err) console.log(err)
+});
+message.channel.send({file: './output.txt'});
+};
+	
+	if (evaled.includes(client.token)){
+	    evaled = evaled.replace(client.token, "that's a secret");
+	}
+
+	
+     let evbed = new Discord.RichEmbed()
      .setTimestamp()
      .setColor(0x00fff0)
-     .addField('**Input:**', '```js\n'+ input +'```')
-     .addField('**Output:**', '```js\n'+ output +'```')
-      return message.channel.send({embed});
-	  
-} catch (err) {
+     .addField('**Input:**', '```js\n'+ code +'```')
+	 .addField('**Output:**', '```js\n'+ evaled +'```')
+      message.channel.send({embed: evbed});
+    
+	} catch (err) {
     let errbed = new Discord.RichEmbed()
     .setColor(0xff0000)
 	.setTimestamp()
-	.addField('**Error:**', '```'+ err +'```')
+	.addField('**Error:**', '```js\n'+ err +'```')
     message.channel.send({embed: errbed});
-}
+    }
+
+
+
 
 }
 module.exports.help = {
