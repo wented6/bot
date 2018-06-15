@@ -1,14 +1,12 @@
 const { Util } = require("discord.js");
 const Discord = require('discord.js');
 const fs = require('fs');
-const DBL = require("dblapi.js");
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 
 const { TOKEN, GOOGLE_API_KEY } = require('./config');
-const DBL_KEY = require('./config');
 
 const prefixes = require("./jsons/prefixes.json");
 const xp = require("./jsons/xp.json");
@@ -21,7 +19,6 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-const dbl = new DBL(DBL_KEY, client);
 
 const youtube = new YouTube(GOOGLE_API_KEY);
 
@@ -74,12 +71,6 @@ function game5() {
    client.user.setActivity(`in bed with mustache`, { type: "PLAYING" });
     setTimeout(game1, 30000);
 }
-
-client.on('ready', () => {
-    setInterval(() => {
-        dbl.postStats(client.guilds.size);
-    }, 60000);
-});
 
 client.on('disconnect', () => console.log('I just disconnected, making sure you know, I will reconnect now...'));
 
