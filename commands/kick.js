@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const fs = require("fs");
 let kicks = require("../jsons/kicks.json");
 
 module.exports.run = async (client,message,args) => {
@@ -23,9 +24,6 @@ let neko = message.guild.members.find("id", "377271843502948354");
  }
   
   message.delete(5000);
-  if (message.author.id === wUser.id){
-	  message.channel.send(`you can't kick yourself`);
-  }
   
   const sWar = kicks[wUser.id].kicks;
 
@@ -33,30 +31,15 @@ let neko = message.guild.members.find("id", "377271843502948354");
     kicks: sWar + parseInt(1)
   };
 
-  fs.writeFile("./jsons/kicks.json", JSON.stringify(warnings), (err) => {
+  fs.writeFile("./jsons/kicks.json", JSON.stringify(kicks), (err) => {
     if (err) console.log(err)
   });
 
 
 if (reason) {
-let warnbed = new Discord.RichEmbed()
-.setTitle(`You've been kicked`)
-.setTimestamp()
-.setDescription(`from the server ${message.guild}`)
-.setColor(0xff0000)
-.addField('**By:**', `${message.member.displayName}`)
-.addField('**For:**', `${reason}`)
-wUser.send(warnbed);
 wmem.kick(reason);
 }
 if (!reason) {
-let warnbe = new Discord.RichEmbed()
-.setTitle(`You've been warned`)
-.setTimestamp()
-.setDescription(`in the server ${message.guild}`)
-.setColor(0xff0000)
-.addField('**By:**', `${message.member.displayName}`)
-wUser.send(warnbe);
 wmem.kick();
 }
 
