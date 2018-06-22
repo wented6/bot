@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports.run = async (client,message,args) => {
 	
-let name = message.content.split(" ").slice(1, 2).join(" ");
-let color = message.content.split(" ").slice(2).join(" ");
+let color = message.content.split(" ").slice(1, 2).join(" ");
+let name = message.content.split(" ").slice(2).join(" ");
 let rle = message.guild.roles.find("name", name);
 if(rle)return message.channel.send("sorry, but that's already a role in this guild");
 let sum1 = message.member
@@ -15,7 +15,7 @@ let sum1 = message.member
 	});
   }
   let embed = new Discord.RichEmbed()
-  .setTitle(`Created role: ${name}`)
+  .setDescription(`**Created role:**\nName: ${name}\n<=Color: ${color}`)
   .setColor(`${color}`)
 message.channel.send(embed);
 	
