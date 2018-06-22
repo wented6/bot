@@ -14,7 +14,10 @@ let sum1 = message.member
 		color: color
 	});
   }
-	message.channel.send(`created role ${name}`);
+  let embed = new Discord.RichEmbed()
+  .setTitle(`Created role: ${name}`)
+  .setColor(`${color}`)
+message.channel.send(embed);
 	
 }
 module.exports.help = {
