@@ -26,7 +26,7 @@ const RichEmbed = new Discord.RichEmbed()
 	   .addField('**Members:**', `\`\`\`${ppl} users - ${pplonl} online | ${pplofl} offline\n${bots} bots - ${botsonl} online | ${botsofl} offline\n${message.guild.members.size} total\`\`\``)
 	   .addField('**# of Emojis:**', `${message.guild.emojis.size}`)
        .addField('**Server Created:**', `${message.guild.createdAt.toUTCString()}`)
-	   .addField('**Channels:**', `${cats} categories\n${txt} text\n${vcs} voice`)
+	   .addField('**Channels:**', `\`\`\`${cats} categories\n${txt} text\n${vcs} voice\`\`\``)
 	   message.channel.send({embed: RichEmbed});
 }
 if(!onr){
@@ -41,7 +41,7 @@ const RichEmbed = new Discord.RichEmbed()
 	   .addField('**Members:**', `\`\`\`${ppl} users - ${pplonl} online | ${pplofl} offline\n${bots} bots - ${botsonl} online | ${botsofl} offline\n${message.guild.members.size} total\`\`\``)
 	   .addField('**# of Emojis:**', `${message.guild.emojis.size}`)
        .addField('**Server Created:**', `${message.guild.createdAt.toUTCString()}`)
-	   .addField('**Channels:**', `${cats} categories\n${txt} text\n${vcs} voice`)
+	   .addField('**Channels:**', `\`\`\`${cats} categories\n${txt} text\n${vcs} voice\`\`\``)
 	   message.channel.send({embed: RichEmbed});
 }
 
