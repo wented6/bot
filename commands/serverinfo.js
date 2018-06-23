@@ -12,6 +12,7 @@ let botsofl = message.guild.members.filter(mem => mem.user.bot === true && mem.p
 let txt = message.guild.channels.filter(c => c.type === 'text').size;
 let vcs = message.guild.channels.filter(c => c.type === 'voice').size;
 let cats = message.guild.channels.filter(c => c.type === 'category').size;
+let onr = message.guild.owner;
 
 if(onr){
 const RichEmbed = new Discord.RichEmbed()
@@ -19,7 +20,7 @@ const RichEmbed = new Discord.RichEmbed()
        .setTimestamp()
 	   .setThumbnail(message.guild.iconURL)
 	   .setTitle(`${message.guild}`)
-	   .addField('**Owner:**', `${message.guild.owner.displayName}`)
+	   .addField('**Owner:**', `${onr.displayName}`)
        .addField('**Region:**', `${message.guild.region}`)
        .addField('**# of Roles:**', `${message.guild.roles.size}`)
 	   .addField('**Members:**', `\`\`\`${ppl} users - ${pplonl} online | ${pplofl} offline\n${bots} bots - ${botsonl} online | ${botsofl} offline\n${message.guild.members.size} total\`\`\``)
