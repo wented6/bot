@@ -24,7 +24,7 @@ if(evaled.length > 1024){
 fs.writeFile("./output.txt",(evaled), (err) => {
 if (err) console.log(err)
 });
-message.channel.send({file: './output.txt'});
+message.channel.send('ayy ... the output was longer than 1024 in length, so i put it in this file ... yw',{file: './output.txt'});
 };
 	
 	if (evaled.includes(client.token)){
