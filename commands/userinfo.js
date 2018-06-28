@@ -8,10 +8,10 @@ const parseTime = function(milliseconds) {
     var days = Math.floor(hours/24); hours %= 24;
     var years = Math.floor(days/365); days %= 365;
     var written = false;
-    return(years?(written=true,years+" Y"):"")+(written?":":"")
-      +(days?(written=true,days+" D"):"")+(written?":":"")
-      +(hours?(written=true,hours+" H"):"")+(written?":":"")
-      +(minutes?(written=true,minutes+" M"):"")+(written?":":"")
+    return(years?(written=true,years+" Y"):"")+(written?": ":"")
+      +(days?(written=true,days+" D"):"")+(written?": ":"")
+      +(hours?(written=true,hours+" H"):"")+(written?": ":"")
+      +(minutes?(written=true,minutes+" M"):"")+(written?": ":"")
       +(seconds?(written=true,seconds+" S"):"")+(written?" ":"");
 };
 var use = message.mentions.users.first();
