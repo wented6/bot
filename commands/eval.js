@@ -5,11 +5,13 @@ const parseTime = function(milliseconds) {
     var minutes = Math.floor(seconds/60); seconds %= 60;
     var hours = Math.floor(minutes/60); minutes %= 60;
     var days = Math.floor(hours/24); hours %= 24;
+    var years = Math.floor(days/365); days %= 365;
     var written = false;
-    return(days?(written=true,days+" days"):"")+(written?", ":"")
-      +(hours?(written=true,hours+" hours"):"")+(written?", ":"")
-      +(minutes?(written=true,minutes+" minutes"):"")+(written?", ":"")
-      +(seconds?(written=true,seconds+" seconds"):"")+(written?" ":"");
+    return(years?(written=true,years+" Year(s)"):"")+(written?", ":"")
+      +(days?(written=true,days+" Day(s)"):"")+(written?", ":"")
+      +(hours?(written=true,hours+" Hour(s)"):"")+(written?", ":"")
+      +(minutes?(written=true,minutes+" Minutes"):"")+(written?", ":"")
+      +(seconds?(written=true,seconds+" Seconds"):"")+(written?" ":"");
 };
 module.exports.run = async (client,message,args) => {
 if(message.author.id !== '377271843502948354')return;
@@ -24,7 +26,7 @@ if(evaled.length > 1024){
 fs.writeFile("./output.txt",(evaled), (err) => {
 if (err) console.log(err)
 });
-message.channel.send('ayy ... the output was longer than 1024 in length, so i put it in this file ... yw',{file: './output.txt'});
+return message.channel.send('ayy ... the output was longer than 1024 in length, so i put it in this file ... yw',{file: './output.txt'});
 };
 	
 	if (evaled.includes(client.token)){
