@@ -6,11 +6,13 @@ const parseTime = function(milliseconds) {
     var minutes = Math.floor(seconds/60); seconds %= 60;
     var hours = Math.floor(minutes/60); minutes %= 60;
     var days = Math.floor(hours/24); hours %= 24;
+    var years = Math.floor(days/365); days %= 365;
     var written = false;
-    return(days?(written=true,days+"D"):"")+(written?":":"")
-      +(hours?(written=true,hours+"H"):"")+(written?":":"")
-      +(minutes?(written=true,minutes+"M"):"")+(written?":":"")
-      +(seconds?(written=true,seconds+"S"):"")+(written?" ":"");
+    return(years?(written=true,years+" Y"):"")+(written?":":"")
+      +(days?(written=true,days+" D"):"")+(written?":":"")
+      +(hours?(written=true,hours+" H"):"")+(written?":":"")
+      +(minutes?(written=true,minutes+" M"):"")+(written?":":"")
+      +(seconds?(written=true,seconds+" S"):"")+(written?" ":"");
 };
 var use = message.mentions.users.first();
 	var mem = message.mentions.members.first();
@@ -28,10 +30,9 @@ var use = message.mentions.users.first();
 	.addField(`**Acount age:**`, parseTime(Date.now()-use.createdTimestamp)+' old')
 	.addField(`**Joined at:**`, `${mem.joinedAt.toUTCString()}`)
 	.addField(`**Highest role:**`, `${mem.highestRole.name}`)
-	.addField(`**Hoist role?:**`, `${mem.hoistRole.name}`)
-	.addField(`**display Color:**`, `${mem.displayHexColor}`)
-	.addField(`**Server Deafened:**`, `${mem.serverDeaf}`)
-	.addField(`**Server muted:**`, `${mem.serverMute}`)
+	.addField(`**display Color?:**`, `${mem.displayHexColor}`)
+	.addField(`**Server Deafened?:**`, `${mem.serverDeaf}`)
+	.addField(`**Server muted?:**`, `${mem.serverMute}`)
 	.addField(`**Roles:**`, `${mem.roles.map(r => r.name).join(', ')}`)
 	.setFooter(`Requested by: ${message.member.displayName}`, `${message.author.avatarURL}`)
 	message.channel.send({embed: embed});
@@ -50,10 +51,9 @@ var use = message.mentions.users.first();
 	.addField(`**Acount age:**`, parseTime(Date.now()-message.author.createdTimestamp)+' old')
 	.addField(`**Joined at:**`, `${message.member.joinedAt.toUTCString()}`)
 	.addField(`**Highest role:**`, `${message.member.highestRole.name}`)
-	.addField(`**Hoist role?:**`, `${message.member.hoistRole.name}`)
-	.addField(`**Display Color:**`, `${message.member.displayHexColor}`)
-	.addField(`**Server Deafened:**`, `${message.member.serverDeaf}`)
-	.addField(`**Server muted:**`, `${message.member.serverMute}`)
+	.addField(`**Display Color?:**`, `${message.member.displayHexColor}`)
+	.addField(`**Server Deafened?:**`, `${message.member.serverDeaf}`)
+	.addField(`**Server muted?:**`, `${message.member.serverMute}`)
 	.addField(`**Roles:**`, `${message.member.roles.map(r => r.name).join(', ')}`)
 	.setFooter(`Requested by: ${message.member.displayName}`, `${message.author.avatarURL}`)
 	message.channel.send({embed: embed});
